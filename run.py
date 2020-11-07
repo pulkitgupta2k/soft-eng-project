@@ -30,10 +30,10 @@ class User(db.Model):
 
 class Device(db.Model):
     __tablename__ = 'device'
-    devid = db.Column(db.Integer, primary_key=True)
+    did = db.Column(db.Integer, primary_key=True)
     dev_name = db.Column(db.String(100), unique=True, nullable=False)
     dev_ip = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.uid'))
+    username = db.Column(db.Integer, db.ForeignKey('user.username'))
 
 
 def create_db():
@@ -82,6 +82,9 @@ def signup():
 
 
 @app.route("/", methods=["GET", "POST"])
+def index():
+    return render_template("index.html")
+
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     """
@@ -103,7 +106,6 @@ def login():
             password = password.strip()
 
         user = User.query.filter_by(username=username).first()
-
         if user and check_password_hash(user.pass_hash, password):
             session[username] = True
             return redirect(url_for("user_home", username=username))
@@ -113,6 +115,18 @@ def login():
     return render_template("login_form.html")
 
 
+@app.route("/add_device/<username>/", methods=["POST"])
+def add_device(username):
+    if request.method == "POST":
+        dev_name = request.form['dev_name'].strip()
+        dev_ip = request.form['dev_ip'].strip()
+        new_device = Device(username=username, dev_name=dev_name, dev_ip=dev_ip)
+        db.session.add(new_device)
+        db.session.commit()
+        flash("Device has been added")
+    
+    return redirect(url_for('user_home', username=username))
+
 @app.route("/user/<username>/")
 def user_home(username):
     """
@@ -120,8 +134,14 @@ def user_home(username):
     """
     if not session.get(username):
         abort(401)
-  
-    return render_template("user_home.html", username=username)
+    devices = Device.query.filter_by(username=username).all()
+    devs = list()
+    for device in devices:
+        dev = []
+        dev.append(device.dev_name)
+        dev.append(device.dev_ip)
+        devs.append(dev)
+    return render_template("user_home.html", username=username, devs = devs)
 
 
 @app.route("/logout/<username>")
