@@ -19,12 +19,21 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model):
+    __tablename__ = 'user'
     uid = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     pass_hash = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
 
     def __repr__(self):
         return '' % self.username
+
+class Device(db.Model):
+    __tablename__ = 'device'
+    devid = db.Column(db.Integer, primary_key=True)
+    dev_name = db.Column(db.String(100), unique=True, nullable=False)
+    dev_ip = db.Column(db.String(100), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.uid'))
 
 
 def create_db():
@@ -122,5 +131,5 @@ def logout(username):
 
 
 if __name__ == "__main__":
-    create_db()
+    # create_db()
     app.run(port=5000, debug=True)
