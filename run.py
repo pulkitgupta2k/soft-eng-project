@@ -53,6 +53,7 @@ def signup():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
+        email = request.form['email']
 
         if not (username and password):
             flash("Username or Password cannot be empty")
@@ -60,11 +61,12 @@ def signup():
         else:
             username = username.strip()
             password = password.strip()
+            email = email.strip()
 
         # Returns salted pwd hash in format : method$salt$hashedvalue
         hashed_pwd = generate_password_hash(password, 'sha256')
 
-        new_user = User(username=username, pass_hash=hashed_pwd)
+        new_user = User(username=username, pass_hash=hashed_pwd, email=email)
         db.session.add(new_user)
 
         try:
