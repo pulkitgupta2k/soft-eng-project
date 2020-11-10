@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Network Management</title>
+
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel='stylesheet' id='vendors-css' href='{{url_for('static', filename='vendors.min5697.css')}}' type='text/css'
+        media='all' />
+    <link rel='stylesheet' id='fontawesome-css' href='{{url_for('static', filename='fontawesome.min5697.css')}}'
+        type='text/css' media='all' />
+    <link rel='stylesheet' id='alpas-main-style-css' href='{{url_for('static', filename='style.min5697.css')}}'
+        type='text/css' media='all' />
+    <style id='alpas-main-style-inline-css' type='text/css'>
+        .post_type_icon,
+        .post_type,
+        .single-blog-video .play-link,
+        .wp-block-button .wp-block-button__link,
+        .has-cyan-bluish-gray-background-color.has-cyan-bluish-gray-background-color,
+        .page-links .current,
+        .page-links .post-page-numbers:hover,
+        .post-password-form input[type="submit"],
+        .comment-navigation .nav-links .nav-previous a:hover,
+        .comment-navigation .nav-links .nav-next a:hover,
+        .blog-sidebar .widget ul li::before,
+        #comments .comment-list .comment-body .reply a:hover,
+        .comment-respond .form-submit input,
+        .blog-sidebar .tagcloud a:hover,
+        .blog-sidebar .tagcloud a:focus,
+        .main-banner,
+        .overview-box .content .features-list li span i,
+        .funfacts-area,
+        .single-team-box:hover .content,
+        .services-details-overview .services-details-desc .services-details-accordion .accordion .accordion-title i,
+        .single-serve-box::before,
+        .page-title-area,
+        .pagination-area .page-numbers.current,
+        .pagination-area .page-numbers:hover,
+        .pagination-area .page-numbers:focus,
+        .pages-links .post-page-numbers.current,
+        .pages-links .post-page-numbers:hover,
+        .pages-links .post-page-numbers:focus,
+        .faq-accordion .accordion .accordion-title i,
+        .coming-soon-area .coming-soon-content .social ul li a:hover,
+        .contact-info-box:hover .icon,
+        .newsletter-content form button:hover,
+        .go-top {
+            background-color: #0ca59d;
+        }
+
+        .wp-block-file .wp-block-file__button,
+        .wp-block-tag-cloud a:hover,
+        .wp-block-tag-cloud a:focus,
+        .wp-block-search button {
+            background-color: #0ca59d !important;
+        }
+
+        .sticky .post-content .title::before,
+        .sticky .post-content .read-more-btn,
+        .blog-details .blog-details-content code,
+        .blog-details .blog-details-content ul a,
+        .blog-details .blog-details-content .category li a:hover,
+        .entry-meta li a:hover,
+        .blog-details .blog-details-content ul.entry-meta li a:hover,
+        #comments .comment-list .comment-body a,
+        .wp-block-image figcaption a,
+        .blog-details .blog-details-content p a,
+        .blog-details .blog-details-content ol a,
+        .wp-block-file a,
+        table th a,
+        .blog-details .blog-details-content kbd,
+        .wp-caption .wp-caption-text a,
+        .comments-area .comment-content code,
+        .comments-area .comment-content kbd,
+        table td a,
+        table td a:hover,
+        .blog-sidebar .widget ul li a:hover,
+        .page-main-content .entry-content a,
+        .page-main-content kbd,
+        .page-main-content code,
+        a:hover,
+        a:focus,
+        .section-title span,
+        .read-more-btn i,
+        .read-more-btn:hover,
+        .about-content span,
+        .single-team-box .image .social a,
+        .single-blog-post .post-content .entry-meta li a:hover,
+        .blog-details .article-footer .article-tags a:hover,
+        .entry-meta li a:hover,
+        .entry-meta li i,
+        .contact-info-box .icon,
+        .contact-info-box p a:hover,
+        .subscribe-contact-info .content span a:hover,
+        .wpcf7-list-item-label a,
+        .single-blog-video .play-link:hover,
+        .single-services-box .icon {
+            color: #0ca59d;
+        }
+
+        .sticky .post-content .entry-meta li a:hover,
+        .is-style-outline .wp-block-button__link,
+        .blog-details .blog-meta ul li a:hover,
+        .blog-details .blog-meta ul li a:hover,
+        table th a:hover,
+        .main-banner-content .btn-primary:hover {
+            color: #0ca59d !important;
+        }
+
+        .form-control:focus,
+        .contact-info-box:hover .icon,
+        blockquote {
+            border-color: #0ca59d;
+        }
+
+        .btn-light:hover,
+        .btn-light:focus {
+            border-color: #0ca59d !important;
+        }
+
+        .evolta-nav .navbar .others-options .btn-primary::after,
+        .main-banner-content .btn-primary::before,
+        .newsletter-content form button,
+        .single-footer-widget .social li a:hover,
+        .single-footer-widget h3::before,
+        .go-top::before {
+            background: #ffac00;
+        }
+
+        .search-overlay.search-popup .search-form .search-button:hover,
+        .search-overlay.search-popup .search-form .search-button:focus,
+        .single-team-box .image .social a:hover,
+        .single-team-box .content span,
+        .services-details-overview .services-details-desc .features-list li i,
+        .single-feedback-item::before,
+        .subscribe-contact-info .content span,
+        .subscribe-contact-info .content span a {
+            color: #ffac00;
+        }
+
+        .search-overlay.search-popup .search-form .search-input:focus {
+            border-color: #ffac00;
+        }
+
+        @media only screen and (max-width: 991px) {
+
+            .evolta-responsive-nav .evolta-responsive-menu.mean-container .mean-nav ul li.active a,
+            .evolta-responsive-nav .evolta-responsive-menu.mean-container .mean-nav ul li.active li.active a,
+            .evolta-responsive-nav .evolta-responsive-menu.mean-container .mean-nav ul li.active li li.active a,
+            .evolta-responsive-nav .evolta-responsive-menu.mean-container .mean-nav ul li.active li li li.active a,
+            .evolta-responsive-nav .evolta-responsive-menu.mean-container .mean-nav ul li.active li li li li.active a,
+            .evolta-responsive-nav .evolta-responsive-menu.mean-container .mean-nav ul li a.active,
+            .others-options .cart-btn:hover {
+                color: #ffac00;
+            }
+        }
+
+        .single-funfacts .circlechart .circle-chart .circle-chart__circle {
+            stroke: #ffac00 !important;
+        }
+
+        .blog-sidebar .widget_search form button::before,
+        .blog-sidebar .widget .widget-title::before,
+        .comments-title::before,
+        .comment-respond .comment-reply-title::before,
+        .search-form .search-submit,
+        .btn-primary::before,
+        .feedback-area {
+            background: linear-gradient(to right top, #0ca59d, #28aca4, #39b2ab, #47b9b3, #54c0ba)
+        }
+
+        .navbar-area.is-sticky {
+            background: linear-gradient(to right top, #0ca59d, #28aca4, #39b2ab, #47b9b3, #54c0ba) !important
+        }
+
+        .blog-sidebar .widget_search form button::after,
+        .comment-respond .form-submit input:hover,
+        .comment-respond .form-submit input:focus,
+        .btn-primary::after,
+        .evolta-nav .navbar .others-options .option-item a span {
+            background: linear-gradient(to right, #ffac00, #ffac00, #ffac00, #faa01f, #f7b733)
+        }
+
+        p,
+        .search-overlay.search-popup .search-form .search-button,
+        .services-details-overview .services-details-desc .features-list li,
+        .single-feedback-item .feedback-desc p::before,
+        .single-feedback-item .feedback-desc p::after,
+        .single-blog-post .post-content .entry-meta li,
+        .single-blog-post .post-content .entry-meta li a,
+        .entry-meta li a,
+        .contact-info-box p a,
+        .blog-details .blog-details-content ul.entry-meta li a,
+        .comment-respond .comment-form-cookies-consent label,
+        #comments .comment-list .comment-body .reply a,
+        .blog-details .blog-details-content ol li,
+        .blog-details .blog-details-content ul li,
+        .blog-sidebar .calendar_wrap caption,
+        .blog-sidebar .tagcloud a,
+        .blog-sidebar .widget ul li,
+        .blog-sidebar .widget ul li a,
+        .entry-meta li,
+        .entry-meta li a {
+            color: #57647c;
+        }
+
+        .single-blog-post .post-content .entry-meta li::before {
+            background-color: #57647c;
+        }
+
+        .navbar-area.is-sticky,
+        .nav-color {
+            background: linear-gradient(to right top, #0ca59d, #28aca4, #39b2ab, #47b9b3, #54c0ba) !important
+        }
+
+        .footer-area {
+            background-color: #182c51;
+        }
+
+        .single-footer-widget .logo p,
+        .single-footer-widget h3,
+        .single-footer-widget ul li a,
+        .single-footer-widget .footer-contact-list li,
+        .single-footer-widget .footer-contact-list li a {
+            color: #ffffff;
+        }
+
+        .single-footer-widget ul li a:hover,
+        .single-footer-widget .footer-contact-list li a:hover {
+            color: #ffac00;
+        }
+
+        .copyright-area {
+            background-color: #0d1d3b;
+        }
+
+        .copyright-area p a,
+        .copyright-area p,
+        .copyright-area ul li a {
+            color: #ffffff;
+        }
+
+        .copyright-area ul li::before {
+            background-color: #ffffff;
+        }
+
+        .copyright-area p a:hover,
+        .copyright-area ul li a:hover {
+            color: #ffac00;
+        }
+
+        .top-header {
+            background-color: #0ca59d;
+        }
+
+        .top-header .header-left-content p,
+        .top-header .header-right-content ul li a,
+        .top-header .header-right-content ul li,
+        .top-header .header-right-content ul li i {
+            color: #ffffff;
+        }
+
+        .single-products .sale-btn,
+        .single-products .products-image ul li a:hover,
+        .productsQuickView .modal-dialog .modal-content .products-content form button,
+        .productsQuickView .modal-dialog .modal-content button.close:hover,
+        .productsQuickView .modal-dialog .modal-content button.close:hover,
+        .woocommerce ul.products li.product:hover .add-to-cart-btn,
+        .shop-sidebar .widget_product_search form button,
+        .shop-sidebar a.button,
+        .shop-sidebar .woocommerce-widget-layered-nav-dropdown__submit,
+        .shop-sidebar .woocommerce button.button,
+        .woocommerce .widget_price_filter .ui-slider .ui-slider-range,
+        .woocommerce .widget_price_filter .ui-slider .ui-slider-handle,
+        .woocommerce #respond input#submit.alt,
+        .woocommerce a.button.alt,
+        .woocommerce button.button.alt,
+        .woocommerce input.button.alt,
+        .products_details div.product .woocommerce-tabs .panel #respond input#submit,
+        .products_details div.product .product_title::before,
+        .woocommerce #respond input#submit.alt.disabled,
+        .woocommerce #respond input#submit.alt.disabled:hover,
+        .woocommerce #respond input#submit.alt:disabled,
+        .woocommerce #respond input#submit.alt:disabled:hover,
+        .woocommerce #respond input#submit.alt:disabled[disabled],
+        .woocommerce #respond input#submit.alt:disabled[disabled]:hover,
+        .woocommerce a.button.alt.disabled,
+        .woocommerce a.button.alt.disabled:hover,
+        .woocommerce a.button.alt:disabled,
+        .woocommerce a.button.alt:disabled:hover,
+        .woocommerce a.button.alt:disabled[disabled],
+        .woocommerce a.button.alt:disabled[disabled]:hover,
+        .woocommerce button.button.alt.disabled,
+        .woocommerce button.button.alt.disabled:hover,
+        .woocommerce button.button.alt:disabled,
+        .woocommerce button.button.alt:disabled:hover,
+        .woocommerce button.button.alt:disabled[disabled],
+        .woocommerce button.button.alt:disabled[disabled]:hover,
+        .woocommerce input.button.alt.disabled,
+        .woocommerce input.button.alt.disabled:hover,
+        .woocommerce input.button.alt:disabled,
+        .woocommerce input.button.alt:disabled:hover,
+        .woocommerce input.button.alt:disabled[disabled],
+        .woocommerce input.button.alt:disabled[disabled]:hover,
+        .btn-primary:hover,
+        .woocommerce #respond input#submit,
+        .woocommerce a.button,
+        .woocommerce button.button,
+        .woocommerce input.button,
+        .woocommerce .woocommerce-MyAccount-navigation ul .is-active a,
+        .woocommerce .woocommerce-MyAccount-navigation ul li a:hover,
+        .products_details div.product span.sale-btn,
+        .shop-sidebar .tagcloud a:focus,
+        .shop-sidebar .widget_search form button,
+        .shop-sidebar .widget .widget-title::before,
+        .shop-sidebar .widget ul li::before,
+        .shop-sidebar .tagcloud a:hover,
+        .shop-sidebar .tagcloud a:focus {
+            background-color: #0ca59d;
+        }
+
+        .btn-primary,
+        .btn-primary.disabled,
+        .btn-primary:disabled {
+            background-color: #ffac00;
+        }
+
+        .productsQuickView .modal-dialog .modal-content .products-content .product-meta span a:hover,
+        .woocommerce ul.products li.product h3 a:hover,
+        .woocommerce ul.products li.product .add-to-cart-btn,
+        .woocommerce div.product .woocommerce-tabs ul.tabs li.active a,
+        .products_details div.product .woocommerce-tabs ul.tabs li a:hover,
+        .products_details div.product .woocommerce-tabs ul.tabs li.active,
+        .products_details div.product .woocommerce-tabs ul.tabs li.active a:hover,
+        .products_details div.product .product_meta span.posted_in a:hover,
+        .products_details div.product .product_meta span.tagged_as a:hover,
+        .products_details div.product span.price,
+        .cart-table table tbody tr td.product-name a,
+        .woocommerce-message::before,
+        .woocommerce-info::before,
+        .shop-sidebar .widget ul li a:hover,
+        .shop-sidebar .widget_rss .widget-title .rsswidget {
+            color: #0ca59d;
+        }
+
+        .woocommerce-info,
+        .woocommerce-message {
+            border-top-color: #0ca59d;
+        }
+
+        .shop-sidebar .widget_shopping_cart .cart_list li a:hover,
+        .shop-sidebar ul li a:hover {
+            color: #0ca59d !important;
+        }
+
+        .woocommerce ul.products li.product:hover .add-to-cart-btn,
+        .form-control:focus,
+        .woocommerce .form-control:focus,
+        .shop-sidebar .tagcloud a:hover,
+        .shop-sidebar .tagcloud a:focus {
+            border-color: #0ca59d;
+        }
+
+        .preloader::before,
+        .preloader::after {
+            background-color: #0ca59d;
+        }
+    </style>
+    <script src='{{url_for('static', filename='jquery4a5f.js')}}' id='jquery-core-js'></script>
+    <script type='text/javascript' id='cookie-notice-front-js-extra'>
+        var cnArgs = { "ajaxUrl": "https:\/\/themes.envytheme.com\/alpas\/wp-admin\/admin-ajax.php", "nonce": "c15dc258ab", "hideEffect": "fade", "position": "bottom", "onScroll": "0", "onScrollOffset": "100", "onClick": "0", "cookieName": "cookie_notice_accepted", "cookieTime": "2592000", "cookieTimeRejected": "2592000", "cookiePath": "\/alpas\/", "cookieDomain": "", "redirection": "0", "cache": "0", "refuse": "0", "revokeCookies": "0", "revokeCookiesOpt": "automatic", "secure": "1", "coronabarActive": "0" };
+    </script>
+    <script src='{{url_for('static', filename='vendors.min68b3.js')}}' id='vendors-js'></script>
+    <script src='{{url_for('static', filename='jquery.smartify68b3.js')}}' id='jquery-smartify-js'></script>
+    <script src='{{url_for('static', filename='smartify68b3.js')}}' id='alpas-smartify-js'></script>
+    <script src='{{url_for('static', filename='main.min68b3.js')}}' id='alpas-main-js'></script>
+    <meta name="msapplication-TileImage"
+        content="https://themes.envytheme.com/alpas/wp-content/uploads/2019/11/favicon-5.png" />
+    <style type="text/css" title="dynamic-css" class="options-output">
+        body {
+            font-size: 14px;
+        }
+
+        .evolta-nav .navbar .navbar-nav .nav-item a {
+            font-size: 17px;
+        }
+
+        .copyright-area ul li {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body
+    class="home page-template page-template-elementor_header_footer page page-id-12 theme-alpas cookies-not-set woocommerce-no-js no-sidebar elementor-default elementor-template-full-width elementor-kit-669 elementor-page elementor-page-12">
+
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner">
+        </div>
+    </div>
+    <!-- End Preloader Area -->
+
+
+
+    <!-- Start Navbar Area -->
+    <header class="header-area ">
+        <!-- Start Top Header Area -->
+
+        <div class="navbar-area ">
+            <div class="evolta-responsive-nav">
+                <div class="container">
+                    <div class="evolta-responsive-menu">
+                        <div class="logo">
+                            <a href="/">
+                                <img src="{{url_for('static', filename='alpas-white-logo-4.png')}}" alt="Alpas"> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="evolta-nav">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <a class="navbar-brand" href="/">
+                            <img src="{{url_for('static', filename='alpas-white-logo-4.png')}}" alt="Alpas"> </a>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <div class="go-top"><i class="fas fa-arrow-up"></i><i class="fas fa-arrow-up"></i></div>
+    </body>
+    
+    </html>

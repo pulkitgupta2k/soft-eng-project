@@ -1,11 +1,71 @@
-<!doctype html5>
-<html>
-<head>
-  <title>Home</title>
-</head>
-<body>
-  <h2>Home</h2>
-    <a href="{{ url_for('login')}}"><button>Login</button></a>
-    <a href="{{ url_for('signup')}}"><button>Register</button></a>
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block content %}
+  <!-- End Navbar Area -->
+  <div data-elementor-type="wp-page" data-elementor-id="12" class="elementor elementor-12" data-elementor-settings="[]">
+    <div class="elementor-inner">
+      <div class="elementor-section-wrap">
+        <section
+          class="elementor-section elementor-top-section elementor-element elementor-element-5aadea5 elementor-section-full_width elementor-section-height-default elementor-section-height-default"
+          data-id="5aadea5" data-element_type="section">
+          <div class="elementor-container elementor-column-gap-no">
+            <div class="elementor-row">
+              <div
+                class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-dba98a7"
+                data-id="dba98a7" data-element_type="column">
+                <div class="elementor-column-wrap elementor-element-populated">
+                  <div class="elementor-widget-wrap">
+                    <div
+                      class="elementor-element elementor-element-79c7a1f elementor-widget elementor-widget-alpas-banner-widget"
+                      data-id="79c7a1f" data-element_type="widget" data-widget_type="alpas-banner-widget.default">
+                      <div class="elementor-widget-container">
+
+                        <!-- Start Main Banner Area -->
+                        <div class="main-banner">
+                          <div class="d-table">
+                            <div class="d-table-cell">
+                              <div class="container-fluid">
+                                <div class="row align-items-center">
+                                  <div class="col-lg-6 col-md-12">
+                                    <div class="main-banner-content">
+                                      <span>Network Management</span>
+                                      <h1>Work smarter, together.</h1>
+                                      <p class="p">We are here to manage your personal internet connection for you. All the devices and the internet statistics for all of them. </p>
+                                      <a href="/login" class="btn btn-primary">Login</a>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-6 col-md-12">
+                                    <div class="main-banner-image">
+                                      <img class="smartify"
+                                        sm-src="https://themes.envytheme.com/alpas/wp-content/uploads/2019/11/banner-img1-5.png"
+                                        alt="image" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="banner-shape">
+                            <img class="smartify"
+                              sm-src="https://themes.envytheme.com/alpas/wp-content/uploads/2019/11/white-shape-5.png"
+                              alt="Shape" />
+                          </div>
+                          <div class="shape1">
+                            <img class="smartify"
+                              sm-src="https://themes.envytheme.com/alpas/wp-content/uploads/2020/04/2-1.png"
+                              alt="Shape" />
+                          </div>
+                          <div class="shape2">
+                            <img class="smartify"
+                              sm-src="https://themes.envytheme.com/alpas/wp-content/uploads/2020/04/3-1.png"
+                              alt="Shape" />
+                          </div>
+                        </div>
+
+
+
+                        
+
+                      {% endblock %}
