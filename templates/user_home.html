@@ -1,24 +1,123 @@
-<!doctype html5>
-<html>
-<head>
-  <title>{{ username.title() }} - Home</title>
-</head>
+{% extends "layout.html" %}
+{% block content %}
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #17a2b8;
+      height: 100vh;
+    }
+  
+    #login .container #login-row #login-column #login-box {
+      margin-top: 120px;
+      max-width: 600px;
+      height: 320px;
+      border: 3px solid #9C9C9C;
+      background-color: #EAEAEA;
+    }
+  
+    #login .container #login-row #login-column #login-box #login-form {
+      padding: 10px;
+    }
+  
+    #login .container #login-row #login-column #login-box #login-form #register-link {
+      margin-top: -85px;
+    }
+
+    .table-text{
+      font-size: 20px;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+
+
+
 <body>
-  <h2>Hello {{username.title()}}</h2>
+
 
   
-  {% for dev in devs%}
-  <div>
-    {{ dev[0] }}  {{ dev[1] }}
+
+
+
+
+
+  <div id="login">
+    
+    <h3 class="text-center text-white pt-5">Hello {{username.title()}}</h3>
+    
+    <div class="container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="table-text">#</th>
+              <th scope="col" class="table-text">Device Name</th>
+              <th scope="col" class="table-text">IP</th>
+              <th scope="col" class="table-text">Action</th>
+        
+            </tr>
+          </thead>
+          <tbody>
+            {% set count=1 %}
+              {% for dev in devs%}
+                    <tr>
+                      <th scope="row" class="table-text">{{loop.index}}</th>
+                      <td class="table-text">{{dev[0]}}</td>
+                      <td class="table-text">{{dev[1]}}</td>
+                      <td > <button class="btn btn-danger">Remove</button> </td>
+                    </tr>
+                    {% set count = count+1 %}
+              {% endfor %}
+          </tbody>
+        </table>
+      <div id="login-row" class="row justify-content-center align-items-center">
+        <div id="login-column" class="col-md-6">
+          <div id="login-box" class="col-md-12">
+
+
+            <form id="add_device" class="form" action="{{ url_for('add_device', username=username) }}" method="post">
+            
+            
+              <h3 class="text-center text-info">Add Device</h3>
+            
+              <div class="form-group">
+                <label for="username" class="text-info">Device Name:</label><br>
+                <input type="text" id="dev_name" name="dev_name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="password" class="text-info">Password:</label><br>
+              <input type="text" id="dev_ip" name="dev_ip" class="form-control">
+              </div>
+              <div class="form-group">
+                <br>
+                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+              </div>
+             
+            </form>
+          </div>
+           <br><br>
+          <a href="{{ url_for('logout', username=username) }}" class="btn btn-block btn-danger" align="right">LOGOUT</a>
+        </div>
+      </div>
+
+    </div>
   </div>
-  {% endfor %}
+<br><br>
 
-  <form id="add_device" action="{{ url_for('add_device', username=username) }}" method="post">
-    Decive Name :  <input type="text" id="dev_name" name="dev_name" />
-    Device IP :  <input type="text" id="dev_ip" name="dev_ip" />
-    <input type="submit" id="submit" text="Submit" />
-  </form>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul class=flashes>
+    {% for message in messages %}
+    <li class="table-text">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
 
-  <p><a href="{{ url_for('logout', username=username) }}">Logout</a></p>
-</body>
-</html>
+
+{% endblock %}
