@@ -160,4 +160,4 @@ def logout(username):
 
 if __name__ == "__main__":
     # create_db()
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, ssl_context='adhoc')
