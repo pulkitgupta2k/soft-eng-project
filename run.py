@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, flash, \
 session, abort
 from flask_sqlalchemy import sqlalchemy, SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from iot import netcat
 
 # Change dbname here
 db_name = "auth.db"
@@ -142,6 +142,12 @@ def user_home(username):
         dev.append(device.dev_ip)
         devs.append(dev)
     return render_template("user_home.html", username=username, devs = devs)
+
+@app.route("/user/<username>/<dev_name>/<action>")
+def action(username, dev_name, action):
+    device = Device.query.filter_by(username=username, dev_name= dev_name).first()
+    netcat(device.dev_ip, 4444, action)
+    return redirect(url_for('user_home', username=username))
 
 
 @app.route("/logout/<username>")
