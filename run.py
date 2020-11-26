@@ -1,9 +1,12 @@
-from flask import Flask, render_template, request, url_for, redirect, flash, \
-session, abort
+from flask import Flask, render_template, request, url_for, redirect, flash, session, abort
 from flask_sqlalchemy import sqlalchemy, SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from iot import netcat
+# from flask_ask import Ask, statement
+from ask_sdk_core.skill_builder import SkillBuilder
+from flask_ask_sdk.skill_adapter import SkillAdapter
 
+from iot import netcat
+from alexa import LaunchRequestHandler, HelloWorldIntentHandler, HelpIntentHandler, CancelAndStopIntentHandler, SessionEndedRequestHandler, AllExceptionHandler
 # Change dbname here
 db_name = "auth.db"
 
@@ -11,11 +14,24 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{db}'.format(db=db_name)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
 # SECRET_KEY required for session, flash and Flask Sqlalchemy to work
 app.config['SECRET_KEY'] = 'configure strong secret key here'
 
 db = SQLAlchemy(app)
+# ask = Ask(app, '/alexa')
+sb = SkillBuilder()
+sb.add_request_handler(LaunchRequestHandler())
+sb.add_request_handler(HelloWorldIntentHandler())
+sb.add_request_handler(HelpIntentHandler())
+sb.add_request_handler(CancelAndStopIntentHandler())
+sb.add_request_handler(SessionEndedRequestHandler())
+sb.add_exception_handler(AllExceptionHandler())
+
+skill_response = SkillAdapter(
+    skill=sb.create(),
+    skill_id="amzn1.ask.skill.2ff855e0-17df-470d-9c6c-20f67f568ad3",
+    app=app)
+skill_response.register(app=app, route="/alexa")
 
 
 class User(db.Model):
@@ -27,6 +43,7 @@ class User(db.Model):
 
     def __repr__(self):
         return '' % self.username
+
 
 class Device(db.Model):
     __tablename__ = 'device'
@@ -85,6 +102,7 @@ def signup():
 def index():
     return render_template("index.html")
 
+
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     """
@@ -120,12 +138,15 @@ def add_device(username):
     if request.method == "POST":
         dev_name = request.form['dev_name'].strip()
         dev_ip = request.form['dev_ip'].strip()
-        new_device = Device(username=username, dev_name=dev_name, dev_ip=dev_ip)
+        new_device = Device(username=username,
+                            dev_name=dev_name,
+                            dev_ip=dev_ip)
         db.session.add(new_device)
         db.session.commit()
         flash("Device has been added")
-    
+
     return redirect(url_for('user_home', username=username))
+
 
 @app.route("/user/<username>/")
 def user_home(username):
@@ -141,11 +162,13 @@ def user_home(username):
         dev.append(device.dev_name)
         dev.append(device.dev_ip)
         devs.append(dev)
-    return render_template("user_home.html", username=username, devs = devs)
+    return render_template("user_home.html", username=username, devs=devs)
+
 
 @app.route("/user/<username>/<dev_name>/<action>")
 def action(username, dev_name, action):
-    device = Device.query.filter_by(username=username, dev_name= dev_name).first()
+    device = Device.query.filter_by(username=username,
+                                    dev_name=dev_name).first()
     netcat(device.dev_ip, 4444, action)
     return redirect(url_for('user_home', username=username))
 
@@ -158,6 +181,11 @@ def logout(username):
     return redirect(url_for('login'))
 
 
+# @ask.launch
+# def start_skill():
+#     welcome_message = "Welcome to the Software Engineering Project."
+#     return statement(welcome_message)
+
 if __name__ == "__main__":
     # create_db()
-    app.run(host="0.0.0.0", port=5000, ssl_context='adhoc')
+    app.run(host="0.0.0.0", port=5000)
