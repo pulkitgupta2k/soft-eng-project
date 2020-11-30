@@ -148,6 +148,15 @@ def add_device(username):
     return redirect(url_for('user_home', username=username))
 
 
+@app.route("/remove_device/<username>/<dev_name>")
+def remove_device(username, dev_name):
+    device = Device.query.filter_by(username=username, dev_name=dev_name).one()
+    db.session.delete(device)
+    db.session.commit()
+    print("device deleted")
+    return redirect(url_for('user_home', username=username))
+
+
 @app.route("/user/<username>/")
 def user_home(username):
     """
@@ -169,8 +178,8 @@ def user_home(username):
 def action(username, dev_name, action):
     device = Device.query.filter_by(username=username,
                                     dev_name=dev_name).first()
-    netcat(device.dev_ip, 4444, action)
-    return redirect(url_for('user_home', username=username))
+    value = netcat(device.dev_ip, 4444, action)
+    return render_template('response.html', username=username, value=value)
 
 
 @app.route("/logout/<username>")
@@ -188,4 +197,4 @@ def logout(username):
 
 if __name__ == "__main__":
     # create_db()
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
