@@ -1,113 +1,124 @@
 {% extends "layout.html" %}
 {% block content %}
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <!------ Include the above in your HEAD tag ---------->
-  
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #17a2b8;
-      height: 100vh;
-    }
-  
-    #login .container #login-row #login-column #login-box {
-      margin-top: 120px;
-      max-width: 600px;
-      height: 320px;
-      border: 3px solid #9C9C9C;
-      background-color: #EAEAEA;
-    }
-  
-    #login .container #login-row #login-column #login-box #login-form {
-      padding: 10px;
-    }
-  
-    #login .container #login-row #login-column #login-box #login-form #register-link {
-      margin-top: -85px;
-    }
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-    .table-text{
-      font-size: 20px;
-      color: white;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-  </style>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+    height: 100vh;
+  }
+
+  #login .container #login-row #login-column #login-box {
+    margin-top: 120px;
+    max-width: 600px;
+    height: 320px;
+    border: 3px solid #9C9C9C;
+    background-color: #EAEAEA;
+  }
+
+  #login .container #login-row #login-column #login-box #login-form {
+    padding: 10px;
+  }
+
+  #login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+  }
+
+  .table-text {
+    font-size: 20px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
 
 
 
 <body>
 
 
-  
+
 
 
 
 
 
   <div id="login">
-    
+
     <h3 class="text-center text-white pt-5">Hello {{username.title()}}</h3>
-    
+
     <div class="container">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col" class="table-text">#</th>
-              <th scope="col" class="table-text">Device Name</th>
-              <th scope="col" class="table-text">IP</th>
-              <th scope="col" class="table-text">Action</th>
-        
-            </tr>
-          </thead>
-          <tbody>
-            {% set count=1 %}
-              {% for dev in devs%}
-                    <tr>
-                      <th scope="row" class="table-text">{{loop.index}}</th>
-                      <td class="table-text">{{dev[0]}}</td>
-                      <td class="table-text">{{dev[1]}}</td>
-                      <td > <button class="btn btn-danger">Remove</button> </td>
-                    </tr>
-                    {% set count = count+1 %}
-              {% endfor %}
-          </tbody>
-        </table>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="table-text">#</th>
+            <th scope="col" class="table-text">Device Name</th>
+            <th scope="col" class="table-text">IP</th>
+            <th scope="col" class="table-text">Action</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% set count=1 %}
+          {% for dev in devs%}
+          <tr>
+            <th scope="row" class="table-text">{{loop.index}}</th>
+            <td class="table-text">{{dev[0]}}</td>
+            <td class="table-text">{{dev[1]}}</td>
+            <td>
+              <a href="{{ url_for('action', username=username, dev_name=dev[0], action='ON') }}">
+                <button class="btn btn-info">ON</button>
+              </a>
+              <a href="{{ url_for('action', username=username, dev_name=dev[0], action='OFF') }}">
+                <button class="btn btn-info">OFF</button>
+              </a>
+              <a href="{{ url_for('action', username=username, dev_name=dev[0], action='GET_TEMP') }}">
+                <button class="btn btn-info">Get Temp</button>
+              </a>
+              <a href="{{ url_for('remove_device', username=username, dev_name=dev[0]) }}">
+                <button class="btn btn-danger">Remove</button></a> </td>
+          </tr>
+          {% set count = count+1 %}
+          {% endfor %}
+        </tbody>
+      </table>
       <div id="login-row" class="row justify-content-center align-items-center">
         <div id="login-column" class="col-md-6">
           <div id="login-box" class="col-md-12">
 
 
             <form id="add_device" class="form" action="{{ url_for('add_device', username=username) }}" method="post">
-            
-            
+
+
               <h3 class="text-center text-info">Add Device</h3>
-            
+
               <div class="form-group">
                 <label for="username" class="text-info">Device Name:</label><br>
                 <input type="text" id="dev_name" name="dev_name" class="form-control">
               </div>
               <div class="form-group">
                 <label for="password" class="text-info">Password:</label><br>
-              <input type="text" id="dev_ip" name="dev_ip" class="form-control">
+                <input type="text" id="dev_ip" name="dev_ip" class="form-control">
               </div>
               <div class="form-group">
                 <br>
                 <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
               </div>
-             
+
             </form>
           </div>
-           <br><br>
+          <br><br>
           <a href="{{ url_for('logout', username=username) }}" class="btn btn-block btn-danger" align="right">LOGOUT</a>
         </div>
       </div>
 
     </div>
   </div>
-<br><br>
+  <br><br>
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -120,4 +131,4 @@
   {% endwith %}
 
 
-{% endblock %}
+  {% endblock %}
