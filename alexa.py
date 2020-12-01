@@ -142,6 +142,9 @@ class GetDataIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
 
         speech_text = "pullu is love"
+        data = handler_input.request_envelope.request.intent.slots
+        dev_name = "".join(data["device_name"].value.split())
+
         handler_input.response_builder.speak(speech_text).set_card(
             SimpleCard("Device Data",
                        speech_text)).set_should_end_session(False)
