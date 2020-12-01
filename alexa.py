@@ -135,7 +135,7 @@ class ToggleDeviceHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
-class GetDataIntentHandler(AbstractExceptionHandler):
+class GetDataIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         return is_intent_name("GetDataIntent")(handler_input)
 
