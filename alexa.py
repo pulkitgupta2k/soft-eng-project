@@ -1,16 +1,14 @@
-from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.dispatch_components import AbstractExceptionHandler
+from ask_sdk_core.dispatch_components import AbstractRequestHandler, AbstractExceptionHandler
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model import Response
 from ask_sdk_model.ui import SimpleCard, LinkAccountCard
 import requests
 
+URL="https://api.amazon.com/user/profile?access_token="
 
-def get_html(url):
-    print(requests.get(url).json())
-    return requests.get(url).json()
-
+def get_user_detail(access_token):
+    return requests.get(URL+access_token).json()
 
 class LaunchRequestHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
@@ -30,13 +28,11 @@ class LaunchRequestHandler(AbstractRequestHandler):
             return handler_input.response_builder.response
 
         else:
-
-            url = "https://api.amazon.com/user/profile?access_token=" + access_token
             speech_text = "This is the default message."
-            data = get_html(url)
+            data = get_user_detail(access_token)
+
             speech_text = f"Hi {data['name']}. I have your email address as: {data['email']}"
-            print(speech_text)
-            # speech_text = " got your data"
+            
             handler_input.response_builder.speak(speech_text).set_card(
                 SimpleCard("Got data",
                            speech_text)).set_should_end_session(False)
@@ -71,7 +67,16 @@ class HelpIntentHandler(AbstractRequestHandler):
             speech_text).set_card(SimpleCard("Hello World", speech_text))
         return handler_input.response_builder.response
 
-
+class ToggleDeviceHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("ToggleDeviceIntent")(handler_input)
+    
+    def handle(self,handler_input):
+        print(handler_input.request_envelope.request.intent.slots)
+        handler_input.response_builder.speak("toggling device").set_card(SimpleCard("Toggle","toggle")).set_should_end_session(False)
+        return handler_input.response_builder.response
+        
 class CancelAndStopIntentHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -88,7 +93,6 @@ class CancelAndStopIntentHandler(AbstractRequestHandler):
                        speech_text)).set_should_end_session(True)
         return handler_input.response_builder.response
 
-
 class SessionEndedRequestHandler(AbstractRequestHandler):
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
@@ -99,7 +103,6 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
         # any cleanup logic goes here
 
         return handler_input.response_builder.response
-
 
 class AllExceptionHandler(AbstractExceptionHandler):
     def can_handle(self, handler_input, exception):
