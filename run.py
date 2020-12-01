@@ -58,6 +58,16 @@ def create_db():
     db.create_all()
 
 
+def perform_action(email, dev_name, action):
+    dev_name = dev_name.lower()
+    action = action.upper()
+    username = User.query.filter_by(email=email).one().username
+    device = Device.query.filter_by(
+        username=username, dev_name=dev_name).first()
+    value = netcat(device.dev_ip, 4444, action)
+    return value
+
+
 @app.route("/signup/", methods=["GET", "POST"])
 def signup():
     """
