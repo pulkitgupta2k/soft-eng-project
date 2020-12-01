@@ -61,7 +61,7 @@ def create_db():
 def perform_action(email, dev_name, action):
     dev_name = dev_name.lower()
     action = action.upper()
-    username = User.query.filter_by(email=email).one().username
+    username = User.query.filter_by(email=email).first().username
     device = Device.query.filter_by(
         username=username, dev_name=dev_name).first()
     value = netcat(device.dev_ip, 4444, action)
